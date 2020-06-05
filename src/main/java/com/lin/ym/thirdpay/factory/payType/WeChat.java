@@ -1,6 +1,6 @@
 package com.lin.ym.thirdpay.factory.payType;
 
-import com.lin.ym.thirdpay.factory.PayForFactory;
+import com.lin.ym.thirdpay.factory.PayFactory;
 import com.lin.ym.thirdpay.factory.PayType;
 import com.lin.ym.thirdpay.factory.wx.PayCommonUtil;
 import com.lin.ym.thirdpay.input.PayRequest;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -32,8 +31,6 @@ public class WeChat implements PayType {
     @Value(value = "${WX_MCH_ID}")
     private String mchId;
 
-    @Autowired
-    private PayForFactory payForFactory;
 
     @Autowired
     private PayCommonUtil payCommonUtil;
@@ -48,8 +45,11 @@ public class WeChat implements PayType {
     @Override
     public Object getPayParams(PayRequest payRequest) throws Exception {
 
-        Map<String, String> map = payForFactory.getPayType(payRequest.getPayFor()).getPayInfo(payRequest);
-        return null;
+        Map<String, String> payInfo = PayFactory
+                .getPayFor(payRequest.getPayFor())
+                .getPayInfo(payRequest);
+        return weixinPrePay(payInfo);
+
     }
 
     /**
@@ -74,9 +74,9 @@ public class WeChat implements PayType {
         parameterMap.put("body", payInfo.get("body"));
         parameterMap.put("out_trade_no", payInfo.get("orderNo"));
         parameterMap.put("fee_type", "CNY");
-        BigDecimal total = new BigDecimal(payInfo.get("totalAmount")).multiply(new BigDecimal(100));
-        java.text.DecimalFormat df = new java.text.DecimalFormat("0");
-        parameterMap.put("total_fee", df.format(total));
+//        BigDecimal total = new BigDecimal(payInfo.get("totalAmount")).multiply(new BigDecimal(100));
+//        java.text.DecimalFormat df = new java.text.DecimalFormat("0");
+        parameterMap.put("total_fee", payInfo.get("totalAmount"));
 //        parameterMap.put("spbill_create_ip", payInfo.getIpAddr());
         parameterMap.put("notify_url", notifyUrl);
         parameterMap.put("trade_type", "APP");

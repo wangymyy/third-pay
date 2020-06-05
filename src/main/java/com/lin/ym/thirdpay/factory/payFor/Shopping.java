@@ -19,9 +19,11 @@ public class Shopping implements PayFor {
     @Override
     public Map getPayInfo(PayRequest payRequest) throws Exception {
         Map<String, String> result = new HashMap<>();
+
+        // todo 获取支付信息
         result.put("body", "body");
         result.put("subject", "subject");
-        result.put("totalAmount", "0.01");
+        result.put("totalAmount", "1");
         result.put("orderNo", payRequest.getOrderNo());
 
 

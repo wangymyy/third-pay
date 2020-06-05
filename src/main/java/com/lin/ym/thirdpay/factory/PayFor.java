@@ -1,6 +1,7 @@
 package com.lin.ym.thirdpay.factory;
 
 
+import com.lin.ym.thirdpay.enums.PayTypeEnum;
 import com.lin.ym.thirdpay.input.PayRequest;
 
 import java.util.Map;
@@ -22,7 +23,7 @@ public interface PayFor {
      * @param map
      * @throws Exception
      */
-    void success(Map<String, String> map) throws Exception;
+    void success(Map<String, String> map, PayTypeEnum payTypeEnum) throws Exception;
 
 
 }

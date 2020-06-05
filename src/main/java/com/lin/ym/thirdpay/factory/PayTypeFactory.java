@@ -14,10 +14,10 @@ public class PayTypeFactory {
     @Resource(name = "weChat")
     PayType weChat;
 
-    public PayType getPayType(int payType) {
-        if (PayTypeEnum.ALIPAY.getCode() == payType) {
+    public PayType getPayType(PayTypeEnum payTypeEnum) {
+        if (PayTypeEnum.ALIPAY == payTypeEnum) {
             return aliPay;
-        } else if (PayTypeEnum.WECHAT.getCode() == payType) {
+        } else if (PayTypeEnum.WECHAT == payTypeEnum) {
             return weChat;
         } else {
             return aliPay;

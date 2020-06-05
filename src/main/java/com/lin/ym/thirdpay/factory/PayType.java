@@ -3,8 +3,13 @@ package com.lin.ym.thirdpay.factory;
 import com.lin.ym.thirdpay.input.PayRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
-public interface PayType {
+
+/**
+ * 支付方式
+ */
+public abstract class PayType {
 
 
     /**
@@ -14,7 +19,16 @@ public interface PayType {
      * @return
      * @throws Exception
      */
-    Object getPayParams(PayRequest payRequest) throws Exception;
+    public Object getPayParams(PayRequest payRequest) throws Exception {
+
+        Map<String, String> payInfo = PayFactory
+                .getPayFor(payRequest.getPayFor())
+                .getPayInfo(payRequest);
+
+        return getParamsByMap(payInfo);
+    }
+
+   public abstract Object getParamsByMap(Map<String, String> payInfo) throws Exception;
 
 
     /**
@@ -23,5 +37,5 @@ public interface PayType {
      * @param request
      * @throws Exception
      */
-    void processingNotifications(HttpServletRequest request) throws Exception;
+    public abstract void processingNotifications(HttpServletRequest request) throws Exception;
 }

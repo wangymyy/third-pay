@@ -33,7 +33,7 @@ LRU（最近最少使用）。你可以设置为FIFO（先进先出）或是LFU�
     </defaultCache>
 
     <!-- 测试 -->
-    <cache name="GoodsType"
+    <cache name="order_attach"
            eternal="false"
            timeToIdleSeconds="2400"
            timeToLiveSeconds="2400"
