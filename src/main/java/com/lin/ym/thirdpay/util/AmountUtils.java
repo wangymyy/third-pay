@@ -90,7 +90,7 @@ public class AmountUtils {
         String currency = amount.replaceAll("\\$|\\￥|\\,", "");  //处理包含, ￥ 或者$的金额
         int index = currency.indexOf(".");
         int length = currency.length();
-        Long amLong = 0l;
+        Long amLong ;
         if (index == -1) {
             amLong = Long.valueOf(currency + "00");
         } else if (length - index >= 3) {

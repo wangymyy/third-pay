@@ -1,5 +1,6 @@
 package com.lin.ym.thirdpay.factory.payFor;
 
+import com.lin.ym.thirdpay.enums.PayTypeEnum;
 import com.lin.ym.thirdpay.factory.PayFor;
 import com.lin.ym.thirdpay.input.PayRequest;
 import org.springframework.stereotype.Component;
@@ -31,13 +32,16 @@ public class Shopping implements PayFor {
     }
 
     /**
-     * 接收支付通知
+     * 支付成功更新状态
      *
      * @param map
+     * @param payTypeEnum
      * @throws Exception
      */
     @Override
-    public void success(Map<String, String> map) throws Exception {
+    public void success(Map<String, String> map, PayTypeEnum payTypeEnum) throws Exception {
 
     }
+
+
 }

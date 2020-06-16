@@ -1,9 +1,7 @@
 package com.lin.ym.thirdpay.factory.payType;
 
-import com.lin.ym.thirdpay.factory.PayFactory;
 import com.lin.ym.thirdpay.factory.PayType;
 import com.lin.ym.thirdpay.factory.wx.PayCommonUtil;
-import com.lin.ym.thirdpay.input.PayRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.jdom.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 @Component("weChat")
-public class WeChat implements PayType {
+public class WeChat extends PayType {
 
 
     @Value(value = "${WX_UNIFIED_NOTIFY_URL}")
@@ -42,15 +40,7 @@ public class WeChat implements PayType {
      * @return
      * @throws Exception
      */
-    @Override
-    public Object getPayParams(PayRequest payRequest) throws Exception {
 
-        Map<String, String> payInfo = PayFactory
-                .getPayFor(payRequest.getPayFor())
-                .getPayInfo(payRequest);
-        return weixinPrePay(payInfo);
-
-    }
 
     /**
      * 处理支付结果
@@ -63,8 +53,8 @@ public class WeChat implements PayType {
 
     }
 
-
-    private Map<String, String> weixinPrePay(Map<String, String> payInfo) throws Exception {
+    @Override
+    public Map<String, String> getParamsByMap(Map<String, String> payInfo) throws Exception {
         String randomString = payCommonUtil.getRandomString(32);
         SortedMap<String, Object> parameterMap = new TreeMap<>();
         parameterMap.put("appid", appId);
